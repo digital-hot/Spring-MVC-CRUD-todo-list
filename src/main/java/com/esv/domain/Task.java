@@ -3,7 +3,8 @@ package com.esv.domain;
 import javax.persistence.*;
 
 @Entity
-public class Task {
+@Table(schema = "todo", name = "task")
+class Task {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
