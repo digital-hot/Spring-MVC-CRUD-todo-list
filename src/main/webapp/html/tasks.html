@@ -2,9 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tasks</title>
+    <title>tasks</title>
 </head>
 <body>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Status</th>
+        </thead>
+        <tbody>
+            <tr th:each="task,number : ${tasks}">
+                <td th:text="${task.id}" />
+                <td th:text="${task.description}" th:id="description_id"/>
+                <td th:text="${task.status}" th:id="status_id"/>
 
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
