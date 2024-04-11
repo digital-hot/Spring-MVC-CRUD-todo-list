@@ -10,33 +10,43 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.esv")
 public class WebConfig implements WebMvcConfigurer {
-    private final ApplicationContext context;
+    private final ApplicationContext applicationContext;
 
-    public WebConfig(ApplicationContext context) {
-        this.context = context;
+    public WebConfig(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
+
     @Bean
-    public SpringResourceTemplateResolver templateResource(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-        resolver.setApplicationContext(context);
+        resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/html/");
         resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
         resolver.setCacheable(false);
         return resolver;
     }
+
     @Bean
-    public SpringTemplateEngine engine(){
+    public SpringTemplateEngine engine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(templateResource());
+        engine.setTemplateResolver(templateResolver());
         engine.setEnableSpringELCompiler(true);
         return engine;
+    }
+
+    @Bean
+    public ThymeleafViewResolver viewResolver() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(engine());
+        return viewResolver;
     }
 
     @Override

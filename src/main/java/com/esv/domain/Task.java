@@ -1,6 +1,6 @@
 package com.esv.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(schema = "todo", name = "task")
